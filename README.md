@@ -4,38 +4,33 @@
 
 This project implements a **Monte Carlo simulation** of **Geometric Brownian Motion (GBM)** to model stochastic stock price dynamics. The entire computation runs on the **GPU using NVIDIA CUDA**, enabling the simulation of millions of independent price paths in parallel with high performance.
 
-The simulation’s goal is to efficiently estimate statistical properties of terminal stock prices under GBM dynamics — a foundational process in quantitative finance and computational stochastic modeling.
+The simulation's goal is to efficiently estimate statistical properties of terminal stock prices under GBM dynamics — a foundational process in quantitative finance and computational stochastic modeling.
 
 ---
 
 ## 1. Theoretical Background
 
 ### Geometric Brownian Motion (GBM)
-In continuous time, the stock price \( S_t \) follows the stochastic differential equation:
+In continuous time, the stock price $S_t$ follows the stochastic differential equation:
 
-\[
-dS_t = \mu S_t dt + \sigma S_t dW_t
-\]
+$$dS_t = \mu S_t dt + \sigma S_t dW_t$$
 
 where:
-- \( \mu \) = expected rate of return (drift),
-- \( \sigma \) = volatility,
-- \( W_t \) = standard Brownian motion.
+- $\mu$ = expected rate of return (drift),
+- $\sigma$ = volatility,
+- $W_t$ = standard Brownian motion.
 
 The analytical solution is:
 
-\[
-S_t = S_0 \exp \left( \left( \mu - \frac{1}{2}\sigma^2 \right)t + \sigma W_t \right)
-\]
+$$S_t = S_0 \exp \left( \left( \mu - \frac{1}{2}\sigma^2 \right)t + \sigma W_t \right)$$
 
-Monte Carlo simulation discretizes this process and evolves prices over \( N \) time steps for each of \( M \) simulated paths.
+Monte Carlo simulation discretizes this process and evolves prices over $N$ time steps for each of $M$ simulated paths.
 
 ### Expected Results
 
-For a time horizon \( T \):
-\[
-E[S_T] = S_0 e^{\mu T}, \quad Var(S_T) = S_0^2 e^{2\mu T}(e^{\sigma^2 T} - 1)
-\]
+For a time horizon $T$:
+
+$$E[S_T] = S_0 e^{\mu T}, \quad Var(S_T) = S_0^2 e^{2\mu T}(e^{\sigma^2 T} - 1)$$
 
 These analytical benchmarks are used to validate the numerical simulation.
 
@@ -46,22 +41,21 @@ These analytical benchmarks are used to validate the numerical simulation.
 ### GPU Design
 
 Each **CUDA thread** simulates **one independent price path**:
-1. Initializes with \( S_0 \)
-2. Iteratively updates over \( N \) time steps using random Gaussian draws.
-3. Writes the final price \( S_T \) to global memory.
+1. Initializes with $S_0$
+2. Iteratively updates over $N$ time steps using random Gaussian draws.
+3. Writes the final price $S_T$ to global memory.
 
 ### Algorithmic Steps
 
 1. **Random Number Generation**  
-   Uses NVIDIA’s **cuRAND** library to produce standard normal variates efficiently on-device.
+   Uses NVIDIA's **cuRAND** library to produce standard normal variates efficiently on-device.
 
 2. **Parallel Path Simulation**  
    Each thread executes the GBM update rule:
 
-   \[
-   S_{t+\Delta t} = S_t \times \exp\left((\mu - \frac{1}{2}\sigma^2)\Delta t + \sigma \sqrt{\Delta t} Z_t\right)
-   \]
-   where \( Z_t \sim \mathcal{N}(0,1) \).
+   $$S_{t+\Delta t} = S_t \times \exp\left((\mu - \frac{1}{2}\sigma^2)\Delta t + \sigma \sqrt{\Delta t} Z_t\right)$$
+   
+   where $Z_t \sim \mathcal{N}(0,1)$.
 
 3. **Reduction and Statistics**  
    Final prices are transferred back to the CPU for statistical post-processing (mean, standard deviation, etc.).
@@ -174,12 +168,10 @@ Results (final price per path):
 ## 8. Validation
 
 Theoretical expectation:
-\[
-E[S_T] = S_0 e^{\mu T} = 105.127
-\]
-\[
-SD[S_T] = S_0 e^{\mu T}\sqrt{e^{\sigma^2T} - 1} = 21.27
-\]
+
+$$E[S_T] = S_0 e^{\mu T} = 105.127$$
+
+$$SD[S_T] = S_0 e^{\mu T}\sqrt{e^{\sigma^2T} - 1} = 21.27$$
 
 Simulation results:
 | Quantity | Theoretical | Simulated | Error |
