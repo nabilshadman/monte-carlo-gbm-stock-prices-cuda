@@ -1,0 +1,23 @@
+Monte Carlo GBM settings:
+  Paths       : 10000000
+  Steps/path  : 252
+  S0          : 100.000000
+  mu          : 0.050000
+  sigma       : 0.200000
+  T (years)   : 1.000000
+  dt          : 0.003968
+GPU kernel time (ms): 39.613441 ms
+Results (final price per path):
+  Mean final price : 105.126943
+  StdDev final price: 21.250639
+  First 10 simulated final prices:
+    [0] 111.837954
+    [1] 124.742920
+    [2] 104.539295
+    [3] 87.117256
+    [4] 97.573518
+    [5] 94.117591
+    [6] 158.767447
+    [7] 118.968169
+    [8] 77.655930
+    [9] 91.989316
