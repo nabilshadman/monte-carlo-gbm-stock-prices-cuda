@@ -151,7 +151,7 @@ Results (final price per path):
 | **GPU Compute Capability** | 8.0 (sm_80) |
 | **GPU Memory Bandwidth** | 1.6 TB/s |
 | **Driver Version** | 545.23.08 |
-| **CUDA Toolkit Version** | 12.3 |
+| **CUDA Toolkit Version** | 12.9 |
 | **Operating System** | Linux (x86_64, AlmaLinux 8) |
 
 ---
