@@ -9,7 +9,7 @@
    NVIDIA A100 GPU (Ampere, sm_80). Uses double precision for finance-grade accuracy.
 
  Build:
-   nvcc -O3 -arch=sm_80 monte_carlo_gbm.cu -o monte_carlo_gbm -lcurand
+   nvcc monte_carlo_gbm.cu -o monte_carlo_gbm -arch=sm_80
 
  Example run:
    ./monte_carlo_gbm 10000000 252 100.0 0.05 0.2 1.0
@@ -212,3 +212,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
