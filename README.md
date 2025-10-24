@@ -146,7 +146,7 @@ Results (final price per path):
 
 | Component | Specification |
 |------------|----------------|
-| **CPU** | AMD EPYC 7763 (64 cores @ 2.45 GHz) |
+| **CPU** | AMD EPYC 7713 (64 cores @ 2.0 GHz) |
 | **GPU** | NVIDIA A100 PCIe (40 GB HBM2) |
 | **GPU Compute Capability** | 8.0 (sm_80) |
 | **GPU Memory Bandwidth** | 1.6 TB/s |
