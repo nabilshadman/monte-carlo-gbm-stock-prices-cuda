@@ -1,4 +1,4 @@
-# Monte Carlo Simulation of Geometric Brownian Motion (GPU-Accelerated in CUDA)
+# GPU-Accelerated Monte Carlo Simulation of Stock Prices using Geometric Brownian Motion (CUDA)
 
 ## Overview
 
@@ -201,5 +201,5 @@ Results confirm near-perfect numerical fidelity.
 If you use or modify this project in academic or professional work, please cite:
 
 ```
-N. Shadman, "GPU-Accelerated Monte Carlo Simulation of Geometric Brownian Motion", 2025.
+N. Shadman, "GPU-Accelerated Monte Carlo Simulation of Stock Prices using Geometric Brownian Motion", 2025.
 ```
