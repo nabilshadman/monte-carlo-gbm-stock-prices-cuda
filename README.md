@@ -67,9 +67,12 @@ Each **CUDA thread** simulates **one independent price path**:
 ```
 monte_carlo_gbm_gpu/
 │
-├── monte_carlo_gbm.cu     # Main CUDA source file
-├── README.md              # Project documentation (this file)
-└── (optional) Makefile    # For build automation
+├── monte_carlo_gbm.cu        # Main CUDA source file
+├── Makefile                  # Build automation
+├── README.md                 # Project documentation (this file)
+├── sample_run_1_a100.txt     # Sample run output (configuration 1)
+├── sample_run_2_a100.txt     # Sample run output (configuration 2)
+└── sample_run_3_a100.txt     # Sample run output (configuration 3)
 ```
 
 ### Key Components in Code
