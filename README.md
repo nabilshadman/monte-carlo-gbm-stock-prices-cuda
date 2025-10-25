@@ -196,16 +196,7 @@ Results (final price per path):
 
 ---
 
-## 7. Performance Notes
-
-- The simulation achieves **tens of millions of GBM paths in milliseconds**, showcasing the scalability of embarrassingly parallel Monte Carlo workloads on modern GPUs.
-- **cuRAND** enables statistically robust Gaussian random number generation.
-- Memory access is coalesced to maximize throughput.
-- Kernel occupancy and block size (typically 256 threads) were optimized for the A100 architecture.
-
----
-
-## 8. Validation
+## 7. Validation
 
 Theoretical expectation:
 
@@ -220,6 +211,36 @@ Simulation results:
 | **StdDev** | 21.27 | 21.25 | -0.09% |
 
 Results confirm near-perfect numerical fidelity.
+
+---
+
+## 8. Performance Notes
+
+- The simulation achieves **tens of millions of GBM paths in milliseconds**, showcasing the scalability of embarrassingly parallel Monte Carlo workloads on modern GPUs.
+- **cuRAND** enables statistically robust Gaussian random number generation.
+- Memory access is coalesced to maximize throughput.
+- Kernel occupancy and block size (typically 256 threads) were optimized for the A100 architecture.
+
+### Profiling Insights (Nsight Systems)
+
+Performance breakdown for 10M paths on A100 (steady-state, excluding one-time setup):
+
+| Component | Time (ms) | Percentage | Details |
+|-----------|-----------|------------|---------|
+| **GPU Kernel Execution** | 51.28 | 88.6% | `gbm_simulate_kernel_double` |
+| **Memory Transfer (D2H)** | 6.12 | 10.6% | 80 MB result array |
+| **Kernel Launch Overhead** | 0.52 | 0.9% | `cudaLaunchKernel` API call |
+
+**Key Observations:**
+- Kernel execution dominates runtime (~89%), indicating **compute-bound** workload — ideal for GPU acceleration
+- Single `cudaMemcpy` Device-to-Host transfer at end minimizes data movement overhead
+- Memory bandwidth: 80 MB in 6.12 ms ≈ **13.1 GB/s** (well within A100's 1.6 TB/s capability)
+- One-time `cudaMalloc` cost (193.6 ms) amortized over multiple runs or larger batch processing
+
+**Bottleneck Analysis:**
+- Primary compute bottleneck: **cuRAND random number generation** and `exp()` operations within kernel (inherent to Monte Carlo methods)
+- Memory transfer is minimal (10.6% of runtime) — not a bottleneck
+- Further optimization possible via: variance reduction techniques (antithetic variates), batched multi-run processing, or multi-GPU scaling
 
 ---
 
@@ -239,7 +260,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-
 ## 11. Citation
 
 If you use or modify this project in academic or professional work, please cite:
@@ -253,4 +273,3 @@ If you use or modify this project in academic or professional work, please cite:
   url = {https://github.com/nabilshadman/monte-carlo-gbm-stock-prices-cuda}
 }
 ```
-
