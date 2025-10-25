@@ -78,9 +78,9 @@ monte_carlo_gbm_gpu/
 ### Key Components in Code
 | Section | Purpose |
 |----------|----------|
-| `init_curand()` | Initializes the cuRAND generator |
-| `simulate_gbm_kernel()` | Core GPU kernel — each thread simulates one path |
-| `analyze_results()` | Computes mean and standard deviation of final prices |
+| `curand_init()` | Initializes the cuRAND generator |
+| `gbm_simulate_kernel_double()` | Core GPU kernel — each thread simulates one path |
+| `compute_stats_host()` | Computes mean and standard deviation of final prices |
 | `main()` | Parses arguments, allocates memory, launches GPU kernel |
 
 ---
@@ -200,6 +200,12 @@ Results confirm near-perfect numerical fidelity.
 
 If you use or modify this project in academic or professional work, please cite:
 
-```
-N. Shadman, "GPU-Accelerated Monte Carlo Simulation of Stock Prices using Geometric Brownian Motion", 2025.
+```bibtex  
+@misc{monte-carlo-gbm-stock-prices-cuda,
+  author = {Shadman, Nabil},
+  title = {GPU-Accelerated Monte Carlo Simulation of Stock Prices using Geometric Brownian Motion},
+  year = {2025},
+  publisher = {GitHub},
+  url = {https://github.com/nabilshadman/monte-carlo-gbm-stock-prices-cuda}
+}
 ```
