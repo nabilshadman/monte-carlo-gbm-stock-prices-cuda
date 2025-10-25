@@ -77,6 +77,7 @@ monte_carlo_gbm_gpu/
 ├── monte_carlo_gbm.cu        # Main CUDA source file
 ├── Makefile                  # Build automation
 ├── README.md                 # Project documentation (this file)
+├── LICENSE                   # MIT License
 ├── sample_run_1_a100.txt     # Sample run output (configuration 1)
 ├── sample_run_2_a100.txt     # Sample run output (configuration 2)
 └── sample_run_3_a100.txt     # Sample run output (configuration 3)
@@ -232,7 +233,14 @@ Results confirm near-perfect numerical fidelity.
 
 ---
 
-## 10. Citation
+## 10. License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+
+## 11. Citation
 
 If you use or modify this project in academic or professional work, please cite:
 
@@ -245,3 +253,4 @@ If you use or modify this project in academic or professional work, please cite:
   url = {https://github.com/nabilshadman/monte-carlo-gbm-stock-prices-cuda}
 }
 ```
+
