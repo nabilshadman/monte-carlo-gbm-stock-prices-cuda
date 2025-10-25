@@ -6,6 +6,13 @@ This project implements a **Monte Carlo simulation** of **Geometric Brownian Mot
 
 The simulation's goal is to efficiently estimate statistical properties of terminal stock prices under GBM dynamics — a foundational process in quantitative finance and computational stochastic modeling.
 
+### Tech Stack
+- **C++17** - Host code and application logic
+- **CUDA** - GPU kernel implementation and parallel computing
+- **cuRAND** - On-device random number generation
+- **Make** - Build automation
+- **Nsight Systems** - Performance profiling and analysis
+
 ---
 
 ## 1. Theoretical Background
@@ -92,26 +99,55 @@ monte_carlo_gbm_gpu/
 - **CUDA Toolkit ≥ 12.0**
 - **C++17 or later**
 
-### Compilation Command
+### Compilation
+
+#### Option 1: Using Make (Recommended)
+
+```bash
+# Build the project
+make
+
+# Build and run with example parameters
+make run
+
+# Build debug version
+make debug
+
+# View all available targets
+make help
+```
+
+#### Option 2: Manual Compilation
 
 ```bash
 nvcc monte_carlo_gbm.cu -o monte_carlo_gbm -arch=sm_80
 ```
 
-Alternatively, for portability:
+For portability across GPU architectures:
 ```bash
-nvcc monte_carlo_gbm.cu -o monte_carlo_gbm     -gencode arch=compute_80,code=sm_80
+nvcc monte_carlo_gbm.cu -o monte_carlo_gbm -gencode arch=compute_80,code=sm_80
 ```
 
-### Run Example
+### Execution
+
+Run the compiled executable with the following parameters:
+
 ```bash
 ./monte_carlo_gbm <n_paths> <n_steps> <S0> <mu> <sigma> <T_years>
 ```
 
-Example:
+**Example:**
 ```bash
 ./monte_carlo_gbm 10000000 252 100.0 0.05 0.2 1.0
 ```
+
+**Parameters:**
+- `n_paths`: Number of Monte Carlo simulation paths (e.g., 10000000)
+- `n_steps`: Number of time steps per path (e.g., 252 for daily trading days in a year)
+- `S0`: Initial stock price (e.g., 100.0)
+- `mu`: Expected rate of return / drift (e.g., 0.05 for 5%)
+- `sigma`: Volatility (e.g., 0.2 for 20%)
+- `T_years`: Time horizon in years (e.g., 1.0)
 
 ---
 
