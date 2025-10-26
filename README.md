@@ -1,5 +1,11 @@
 # GPU-Accelerated Monte Carlo Simulation of Stock Prices using Geometric Brownian Motion (CUDA)
 
+[![C++](https://img.shields.io/badge/C++-17-00599C?style=flat&logo=c%2B%2B&logoColor=white)](https://isocpp.org/)
+[![CUDA](https://img.shields.io/badge/CUDA-12.9-76B900?style=flat&logo=nvidia&logoColor=white)](https://developer.nvidia.com/cuda-toolkit)
+[![GPU](https://img.shields.io/badge/GPU-NVIDIA%20A100-76B900?style=flat&logo=nvidia)](https://www.nvidia.com/en-us/data-center/a100/)
+[![Platform](https://img.shields.io/badge/Platform-Linux-FCC624?style=flat&logo=linux&logoColor=black)](https://www.linux.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ## Overview
 
 This project implements a **Monte Carlo simulation** of **Geometric Brownian Motion (GBM)** to model stochastic stock price dynamics. The entire computation runs on the **GPU using NVIDIA CUDA**, enabling the simulation of millions of independent price paths in parallel with high performance.
