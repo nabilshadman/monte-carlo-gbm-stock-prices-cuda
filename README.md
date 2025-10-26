@@ -67,6 +67,20 @@ Each **CUDA thread** simulates **one independent price path**:
 3. **Reduction and Statistics**  
    Final prices are transferred back to the CPU for statistical post-processing (mean, standard deviation, etc.).
 
+### Workflow Diagram
+
+The following diagram illustrates the end-to-end execution flow:
+
+<p align="center">
+  <img width="450" height="300" alt="CUDA Monte Carlo Workflow" src="https://github.com/user-attachments/assets/c879859a-58ab-4603-8cd1-d88e7df748b9" />
+</p>
+
+<p align="center">
+  <em><strong>Figure 1:</strong> GPU-accelerated Monte Carlo simulation workflow</em>
+</p>
+
+The CPU launches a CUDA kernel on the GPU, where thousands of parallel threads each simulate one independent stock price path. Each thread initializes its own cuRAND state, performs the specified number of time-step updates using the GBM formula, and stores the final price in GPU global memory. Results are then transferred back to CPU for statistical analysis (mean, standard deviation).
+
 ---
 
 ## 3. Code Structure
